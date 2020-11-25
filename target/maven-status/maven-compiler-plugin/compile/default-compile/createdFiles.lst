@@ -1,0 +1,6 @@
+io\javasmithy\App.class
+io\javasmithy\algorithms\KMP.class
+io\javasmithy\algorithms\NaiveStringMatcher.class
+io\javasmithy\algorithms\Algorithm.class
+io\javasmithy\algorithms\AlgorithmFactory.class
+io\javasmithy\algorithms\RabinKarp.class
