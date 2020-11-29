@@ -5,6 +5,8 @@ import java.lang.Math;
 public class RabinKarp implements Algorithm{
 
     public void process(String pattern, String text){
+        System.out.println("\nStarting Rabin Karp:");
+
         char[] p = pattern.toCharArray();
         char[] t = text.toCharArray();
 
