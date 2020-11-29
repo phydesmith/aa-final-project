@@ -18,6 +18,7 @@ public class RunnableNaive implements Runnable {
 
     @Override
     public void run() {
+        System.out.println("RUNNING");
         try{
             while(!q.isEmpty()){
                 int startIndex = q.poll();

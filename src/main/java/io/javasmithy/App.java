@@ -11,6 +11,7 @@ import java.io.IOException;
 import java.io.InputStreamReader;
 import java.lang.reflect.Array;
 import java.util.*;
+import java.util.stream.Collectors;
 
 public class App {
     public static void main( String[] args ) {
@@ -27,12 +28,16 @@ public class App {
         //List<String> names = new ArrayList(Arrays.asList("naive", "rk", "kmp", "kmp-geeks"));
         List<String> names = new ArrayList(Arrays.asList("naive", "rk", "kmp-geeks"));
 
-        //String pattern = "yikes";
-        String pattern = "test";
+        String pattern = "uniquetestingstring";
         try{
-            BufferedReader in = new BufferedReader(new InputStreamReader(App.class.getClassLoader().getResourceAsStream("text.txt")));
+            BufferedReader in = new BufferedReader(new InputStreamReader(App.class.getClassLoader().getResourceAsStream("sherlock.txt")));
 
-            String text = in.readLine();
+            String text = in.lines().collect(Collectors.joining("\n"));
+
+            int t = text.length();
+            int m = pattern.length();
+            int k = threads.length;
+
 
             Map<String, Algorithm> algorithms = new HashMap<String, Algorithm>();
             for (String name: names) {
@@ -54,10 +59,18 @@ public class App {
                 threads[i].join();
             }
 
+
             //  Threaded kmp
-            System.out.println("Multi-threaded KMP");
+            ArrayDeque<Integer> kmpIndexes = new ArrayDeque<>();
+            for(int i = 0; i < text.length()-pattern.length(); i++){
+                kmpIndexes.add(i*k);
+            }
+            for (int i = 1; i < t-m; i++){
+                kmpIndexes.add( (i*k) - (m-1));
+            }
+
             for (int i = 0; i < threads.length; i++){
-                threads[i]= new Thread(new RunnableKMP(algorithms.get("kmp-geeks"), pattern, text));
+                threads[i]= new Thread(new RunnableKMP(algorithms.get("kmp-geeks"), pattern, text, kmpIndexes, k));
                 threads[i].start();
                 threads[i].join();
             }
